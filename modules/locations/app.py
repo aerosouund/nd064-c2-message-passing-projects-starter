@@ -1,11 +1,8 @@
 from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from app.services import LocationService
 from flask_accepts import accepts, responds
 
 app = Flask(__name__)
-
-db = SQLAlchemy()
 
 
 

@@ -1,8 +1,9 @@
 import logging
 from datetime import datetime, timedelta
+from flask_sqlalchemy import SQLAlchemy
 from typing import Dict, List
 
-
+db = SQLAlchemy()
 
 class LocationResource(Resource):
     @accepts(schema=LocationSchema)
