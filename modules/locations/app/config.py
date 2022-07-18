@@ -2,7 +2,7 @@ import os
 from typing import List, Type
 
 DB_USERNAME = "ct_admin"
-DB_PASSWORD = "geoconnections"
+DB_PASSWORD = "d293aW1zb3NlY3VyZQ=="
 DB_HOST = "postgres"
 DB_PORT = "5432"
 DB_NAME = "geoconnections"
