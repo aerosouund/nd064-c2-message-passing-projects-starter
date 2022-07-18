@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: udaconnect-persons
+  name: udaconnect-persons
+spec:
+  ports:
+  - name: "5000"
+    port: 5000
+    targetPort: 5000
+    nodePort: 30003
+  selector:
+    service: udaconnect-persons
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: udaconnect-persons
+  name: udaconnect-persons
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: udaconnect-persons
+  template:
+    metadata:
+      labels:
+        service: udaconnect-persons
+    spec:
+      containers:
+      - image: aerosouund/udaconnect-persons-service:latest
+        name: udaconnect-persons
+        imagePullPolicy: Always
+      restartPolicy: Always
