@@ -9,6 +9,8 @@ from flask import request
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
+import locations_pb2
+import locations_pb2_grpc
 
 DATE_FORMAT = "%Y-%m-%d"
 
