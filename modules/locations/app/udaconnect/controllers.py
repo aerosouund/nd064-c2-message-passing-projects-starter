@@ -11,6 +11,9 @@ from flask_restx import Namespace, Resource
 from typing import Optional, List
 import locations_pb2
 import locations_pb2_grpc
+import grpc
+import time
+from concurrent import futures
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -35,6 +38,45 @@ class LocationResource(Resource):
     def get(self, location_id) -> Location:
         location: Location = LocationService.retrieve(location_id)
         return location
+
+
+class LocationServicer(locations_pb2_grpc.LocationServiceServicer):
+    def Get(self, request, context):
+        location: Location = LocationService.retrieve(request.id)
+        result = locations_pb2.LocationMessage(location)
+        return result
+
+    def Create(self, request, context):
+        print("Received a message!")
+
+        request_value = {
+            "id": request.id,
+            "person_id": request.person_id,
+            "created_at": request.created_at,
+            "longitude": request.longitude,
+            "latitude": request.latitude
+        }
+        print(request_value)
+        # replace with kafka queue write
+        location: Location = LocationService.create(request_value.get_json())
+
+        return locations_pb2.LocationMessage(**request_value)
+
+
+# Initialize gRPC server
+server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+locations_pb2_grpc.add_LocationServiceServicer_to_server(LocationServicer(), server)
+
+
+print("Server starting on port 5005...")
+server.add_insecure_port("[::]:5005")
+server.start()
+# Keep thread alive
+try:
+    while True:
+        time.sleep(86400)
+except KeyboardInterrupt:
+    server.stop(0)
 
 
 
