@@ -9,8 +9,8 @@ from flask import request
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
-import locations_pb2
-import locations_pb2_grpc
+import app.udaconnect.locations_pb2 as locations_pb2
+import app.udaconnect.locations_pb2_grpc as locations_pb2_grpc
 import grpc
 import time
 from concurrent import futures
