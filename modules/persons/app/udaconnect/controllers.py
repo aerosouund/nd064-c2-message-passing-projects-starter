@@ -9,7 +9,6 @@ from flask import request, g
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
-from kafka import KafkaProducer
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -17,13 +16,6 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 
 
 # TODO: This needs better exception handling
-
-@api.before_first_request
-def before_request():
-    TOPIC_NAME = 'persons'
-    KAFKA_SERVER = 'kafka-0.kafka-headless.default.svc.cluster.local:9092'
-    producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
-    g.kafka_producer = producer
 
 
 @api.route("/persons")

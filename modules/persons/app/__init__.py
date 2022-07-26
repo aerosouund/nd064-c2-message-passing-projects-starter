@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
+from kafka import KafkaProducer
 
 db = SQLAlchemy()
 
@@ -18,6 +19,14 @@ def create_app(env=None):
 
     register_routes(api, app)
     db.init_app(app)
+
+
+    @app.before_first_request
+    def before_request():
+        TOPIC_NAME = 'persons'
+        KAFKA_SERVER = 'kafka-0.kafka-headless.default.svc.cluster.local:9092'
+        producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
+        g.kafka_producer = producer
 
     @app.route("/health")
     def health():
