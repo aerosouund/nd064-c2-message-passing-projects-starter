@@ -5,10 +5,11 @@ from app.udaconnect.schemas import (
     PersonSchema,
 )
 from app.udaconnect.services import PersonService
-from flask import request
+from flask import request, g
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
+from kafka import KafkaProducer
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -17,6 +18,13 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 
 # TODO: This needs better exception handling
 
+@api.before_first_request
+def before_request():
+    TOPIC_NAME = 'persons'
+    KAFKA_SERVER = 'kafka-0.kafka-headless.default.svc.cluster.local:9092'
+    producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
+    g.kafka_producer = producer
+
 
 @api.route("/persons")
 class PersonsResource(Resource):
@@ -24,8 +32,9 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        new_person: Person = PersonService.create(payload)
-        return new_person
+        kafka_producer = g.kafka_producer
+        kafka_producer.send("items", payload)
+        return payload
 
     @responds(schema=PersonSchema, many=True)
     def get(self) -> List[Person]:
