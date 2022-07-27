@@ -9,6 +9,7 @@ from flask import request, g
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
+import logging
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -24,7 +25,7 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
-        print(payload)
+        logging.critical('the payload ' + payload)
         kafka_producer = g.kafka_producer
         kafka_producer.send("items", payload)
         return payload
