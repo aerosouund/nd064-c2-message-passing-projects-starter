@@ -26,7 +26,7 @@ class PersonsResource(Resource):
     def post(self) -> Person:
         payload = request.json
         kafka_producer = g.kafka_producer
-        kafka_producer.send("persons", bytes(str(payload)))
+        kafka_producer.send("persons", bytes(str(payload), encoding='utf-8'))
         return payload
 
     @responds(schema=PersonSchema, many=True)
