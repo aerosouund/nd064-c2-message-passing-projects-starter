@@ -21,8 +21,10 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 
 @api.route("/persons")
 class PersonsResource(Resource):
+    @accepts(schema=PersonSchema)
+    @responds(schema=PersonSchema)
     def post(self) -> Person:
-        payload = request.get_json()
+        payload = request.json
         kafka_producer = g.kafka_producer
         kafka_producer.send("persons", payload)
         return payload
