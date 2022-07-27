@@ -21,10 +21,10 @@ def create_app(env=None):
     db.init_app(app)
 
 
-    @app.before_first_request
+    @app.before_request
     def before_request():
         TOPIC_NAME = 'persons'
-        KAFKA_SERVER = 'kafka-0.kafka-headless.default.svc.cluster.local:9092'
+        KAFKA_SERVER = 'kafka:9092'
         producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
         g.kafka_producer = producer
 

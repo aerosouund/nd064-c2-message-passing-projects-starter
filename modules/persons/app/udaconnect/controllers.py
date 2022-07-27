@@ -5,7 +5,7 @@ from app.udaconnect.schemas import (
     PersonSchema,
 )
 from app.udaconnect.services import PersonService
-from flask import request
+from flask import request, g
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
@@ -24,6 +24,7 @@ class PersonsResource(Resource):
     @responds(schema=PersonSchema)
     def post(self) -> Person:
         payload = request.get_json()
+        print(payload)
         kafka_producer = g.kafka_producer
         kafka_producer.send("items", payload)
         return payload
