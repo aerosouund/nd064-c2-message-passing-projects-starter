@@ -13,10 +13,13 @@ consumer_persons = KafkaConsumer('persons', bootstrap_servers = ['kafka:9092'],
 value_deserializer = lambda m: json.loads(m.decode('utf-8')))
 
 for message in consumer_persons:
-    try:
-        logging.debug('attempting to retrieve record')
-        get_person(message.person_id)
-        logging.debug('record found, no need for a write')
-    except:
-        load_person(message)
-        logging.debug('wrote record to db')
+    print(message)
+
+# for message in consumer_persons:
+#     try:
+#         logging.debug('attempting to retrieve record')
+#         get_person(message.person_id)
+#         logging.debug('record found, no need for a write')
+#     except:
+#         load_person(message)
+#         logging.debug('wrote record to db')
