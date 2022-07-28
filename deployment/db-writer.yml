@@ -15,7 +15,7 @@ spec:
         service: db-writer
     spec:
       containers:
-      - image: aerosouund/udaconnect-persons-service:latest
+      - image: aerosouund/db-writer:latest
         name: db-writer
         imagePullPolicy: Always
         env:

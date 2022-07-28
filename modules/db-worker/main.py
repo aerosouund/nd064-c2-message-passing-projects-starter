@@ -1,6 +1,6 @@
 from kafka import KafkaConsumer
 import json
-from .db import get_person, load_person
+from db import get_person, load_person
 import logging
 
 logging.basicConfig(
