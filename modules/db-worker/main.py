@@ -10,8 +10,9 @@ logging.basicConfig(
     level=logging.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S')
 
-consumer_persons = KafkaConsumer('persons', bootstrap_servers = ['kafka:9092'],
+consumer_persons = KafkaConsumer(bootstrap_servers = ['kafka:9092'],
 value_deserializer = lambda m: json.loads(m.decode('utf-8')))
+consumer_persons.subscribe(topics='persons')
 
 for message in consumer_persons:
     print(message)
