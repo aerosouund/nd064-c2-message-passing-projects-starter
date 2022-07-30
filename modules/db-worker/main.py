@@ -15,7 +15,8 @@ value_deserializer = lambda m: json.dumps(m.decode('utf-8')))
 consumer_persons.subscribe(topics='persons')
 
 for message in consumer_persons:
-    print(message)
+    print(message.value)
+    print('the type is ', type(message.value))
 
 # for message in consumer_persons:
 #     try:
