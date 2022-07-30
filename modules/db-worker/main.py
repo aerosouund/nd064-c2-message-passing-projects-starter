@@ -11,18 +11,17 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S')
 
 consumer_persons = KafkaConsumer(bootstrap_servers = ['kafka:9092'],
-value_deserializer = lambda m: json.loads(m.decode('utf-8')))
+value_deserializer = lambda m: json.dumps(m.decode('utf-8')))
 consumer_persons.subscribe(topics='persons')
 
 for message in consumer_persons:
-    print(message.value)
-    print('the type is ', type(message.value))
+    payload = json.loads(message.value)
+    logging.debug('attempting to retrieve record')
+    try:
+        get_person(payload.person_id)
+        logging.debug('record found, no need for a write')
+    except:
+        load_person(payload)
+        logging.debug('wrote record to db')
 
-# for message in consumer_persons:
-#     try:
-#         logging.debug('attempting to retrieve record')
-#         get_person(message.person_id)
-#         logging.debug('record found, no need for a write')
-#     except:
-#         load_person(message)
-#         logging.debug('wrote record to db')
+    
