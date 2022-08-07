@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 from kafka import KafkaProducer
+import json
 
 db = SQLAlchemy()
 
@@ -25,7 +26,7 @@ def create_app(env=None):
     def before_request():
         TOPIC_NAME = 'persons'
         KAFKA_SERVER = 'kafka:9092'
-        producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
+        producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER, value_serializer=lambda v: json.dumps(v).encode('utf-8'))
         g.kafka_producer = producer
 
     @app.route("/health")
