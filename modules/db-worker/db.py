@@ -14,7 +14,7 @@ def connect():
 def get_person(person_id):
     conn = connect()
     cursor = conn.cursor()
-    cursor.execute('SELECT id FROM person WHERE id=%s', (person_id))
+    cursor.execute('SELECT id FROM person WHERE id=%s', [person_id])
     results = cursor.fetchall()
     cursor.close()
     conn.close()
