@@ -17,7 +17,7 @@ consumer_persons.subscribe(topics='persons')
 
 
 for message in consumer_persons:
-    payload = json.loads(json.loads(message.value))
+    payload = message
     logging.debug('attempting to retrieve record')
     try:
         print('figuring out types', payload , type(payload))
