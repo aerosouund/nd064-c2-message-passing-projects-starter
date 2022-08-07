@@ -25,7 +25,7 @@ def load_person(person: Dict):
     conn = connect()
     cursor = conn.cursor()
     cursor.execute(
-        'INSERT INTO person (id, first_name, laft_name, company_name) VALUES (%s, %s, %s, %s)',
+        'INSERT INTO person (id, first_name, last_name, company_name) VALUES (%s, %s, %s, %s)',
         (person['id'], person['first_name'], person['last_name'], person['company_name'])
         )
     conn.commit()
