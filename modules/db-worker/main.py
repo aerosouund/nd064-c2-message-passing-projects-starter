@@ -19,7 +19,7 @@ for message in consumer_persons:
     logging.debug('attempting to retrieve record')
     try:
         print('figuring out types', payload , type(payload))
-        get_person(payload.person_id)
+        get_person(payload['id'])
         logging.debug('record found, no need for a write')
     except:
         load_person(payload)
