@@ -15,7 +15,7 @@ value_deserializer = lambda m: json.dumps(m.decode('utf-8')))
 consumer_persons.subscribe(topics='persons')
 
 for message in consumer_persons:
-    payload = json.loads(message.value)
+    payload = json.load(message.value)
     logging.debug('attempting to retrieve record')
     try:
         print('figuring out types', payload , type(payload))
