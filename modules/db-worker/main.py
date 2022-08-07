@@ -19,7 +19,7 @@ consumer_persons.subscribe(topics='persons')
 for message in consumer_persons:
     print(type(message.value))
     print(message.value)
-    payload = ast.literal_eval(json.dumps(message.value))
+    payload = ast.literal_eval(json.dumps(message.value.decode('utf-8')))
     logging.debug('attempting to retrieve record')
     try:
         print('figuring out types', payload , type(payload))
