@@ -22,7 +22,6 @@ for message in consumer_persons:
     payload = ast.literal_eval(str(message.value))
     logging.debug('attempting to retrieve record')
     try:
-        print('figuring out types', payload , type(payload))
         get_person(payload['id'])
         logging.debug('record found, no need for a write')
     except:
