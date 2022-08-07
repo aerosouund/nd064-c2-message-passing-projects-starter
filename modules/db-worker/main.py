@@ -18,6 +18,7 @@ for message in consumer_persons:
     payload = json.loads(message.value)
     logging.debug('attempting to retrieve record')
     try:
+        print('figuring out types', payload , type(payload))
         get_person(payload.person_id)
         logging.debug('record found, no need for a write')
     except:
