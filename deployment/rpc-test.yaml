@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: rpc-test
+  name: rpc-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: rpc-test
+  template:
+    metadata:
+      labels:
+        service: rpc-test
+    spec:
+      containers:
+      - image: aerosouund/rpc-test:latest
+        name: rpc-test
+        imagePullPolicy: Always
+      restartPolicy: Always
