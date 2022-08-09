@@ -12,7 +12,6 @@ from typing import Optional, List
 import app.udaconnect.locations_pb2 as locations_pb2
 import app.udaconnect.locations_pb2_grpc as locations_pb2_grpc
 import grpc
-import time
 from concurrent import futures
 
 DATE_FORMAT = "%Y-%m-%d"
@@ -62,10 +61,9 @@ class LocationServicer(locations_pb2_grpc.LocationServiceServicer):
 
         return locations_pb2.LocationMessage(**request_value)
 
-
-# Initialize gRPC server
-server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
-locations_pb2_grpc.add_LocationServiceServicer_to_server(LocationServicer(), server)
-
+def create_rpc_server():
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+    locations_pb2_grpc.add_LocationServiceServicer_to_server(LocationServicer(), server)
+    return server
 
 
