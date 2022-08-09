@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import app.udaconnect.locations_pb2 as locations__pb2
+import locations_pb2 as locations__pb2
 
 
 class LocationServiceStub(object):
