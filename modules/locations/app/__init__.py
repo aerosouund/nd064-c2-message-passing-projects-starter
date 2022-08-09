@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
+from app.udaconnect.controllers import server
 
 db = SQLAlchemy()
 
@@ -18,6 +19,17 @@ def create_app(env=None):
 
     register_routes(api, app)
     db.init_app(app)
+
+    print("Server starting on port 5005...")
+    server.add_insecure_port("[::]:5005")
+    server.start()
+    # Keep thread alive
+    try:
+        while True:
+            time.sleep(86400)
+    except KeyboardInterrupt:
+        server.stop(0)
+
 
     @app.route("/health")
     def health():
