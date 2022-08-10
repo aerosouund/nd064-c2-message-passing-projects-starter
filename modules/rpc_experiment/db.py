@@ -1,4 +1,5 @@
 import psycopg2
+from geoalchemy2.functions import ST_AsText, ST_Point
 from typing import Dict
 import os
 
@@ -11,22 +12,22 @@ def connect():
     return conn
  
 
-def get_person(person_id):
+def get_location(location_id):
     conn = connect()
     cursor = conn.cursor()
-    cursor.execute('SELECT id FROM person WHERE id=%s', [person_id])
+    cursor.execute('SELECT id FROM location WHERE id=%s', [location_id])
     results = cursor.fetchall()
     cursor.close()
     conn.close()
     return results[0]
     
 
-def load_person(person: Dict):
+def load_location(location: Dict):
     conn = connect()
     cursor = conn.cursor()
     cursor.execute(
-        'INSERT INTO person (id, first_name, last_name, company_name) VALUES (%s, %s, %s, %s)',
-        (person['id'], person['first_name'], person['last_name'], person['company_name'])
+        'INSERT INTO location (id, person_id, coordinate, creation_time) VALUES (%s, %s, %s, %s)',
+        (location['id'], location['person_id'], ST_Point(location["latitude"], location["longitude"]), location['creation_time'])
         )
     conn.commit()
     cursor.close()
