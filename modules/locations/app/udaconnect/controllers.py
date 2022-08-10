@@ -10,6 +10,7 @@ from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
 import app.udaconnect.locations_pb2_grpc as locations_pb2_grpc
+import app.udaconnect.locations_pb2 as locations_pb2
 import grpc
 import logging
 
@@ -26,11 +27,16 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 class LocationResource(Resource):
     def post(self) -> Location:
         location = request.get_json()
-        logging.warning(f'the object received is {type(location)}, {location}')
-        print(f'the object received is {type(location)}, {location}')
+        message = locations_pb2.LocationMessage(
+                id=location['id'],
+                person_id=location['person_id'],
+                created_at=location['created_at'],
+                longitude=location['longitude'],
+                latitude=location['latitude']
+            )
         channel = grpc.insecure_channel("rpc-server:5005")
         stub = locations_pb2_grpc.LocationServiceStub(channel)
-        response = stub.Create(location)
+        response = stub.Create(message)
         return response
 
     @responds(schema=LocationSchema)
