@@ -26,7 +26,7 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 class LocationResource(Resource):
     def post(self) -> Location:
         location = request.get_json()
-        logging.debug(f'the object received is {type(location)}, {location}')
+        app.logger.debug(f'the object received is {type(location)}, {location}')
         channel = grpc.insecure_channel("rpc-server:5005")
         stub = locations_pb2_grpc.LocationServiceStub(channel)
         response = stub.Create(location)
