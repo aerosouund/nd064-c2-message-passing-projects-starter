@@ -3,7 +3,8 @@ import locations_pb2
 import locations_pb2_grpc
 from concurrent import futures
 import time
-from db import get_location, load_location
+import logging
+from db import load_location
 
 
 channel = grpc.insecure_channel("udaconnect-locations:5005")
@@ -20,8 +21,8 @@ class LocationServicer(locations_pb2_grpc.LocationServiceServicer):
             "longitude": request.longitude,
             "latitude": request.latitude
         }
-        print(request_value)
-        location = load_location(request_value)
+        print('creating record with value ', request_value)
+        load_location(request_value)
 
         return locations_pb2.LocationMessage(**request_value)
 
