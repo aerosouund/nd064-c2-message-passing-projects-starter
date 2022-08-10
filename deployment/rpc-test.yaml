@@ -1,21 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: rpc-server
+  name: rpc-server
+spec:
+  ports:
+  - name: "5005"
+    port: 5005
+    targetPort: 5005
+  selector:
+    service: rpc-server
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: rpc-test
-  name: rpc-test
+    service: rpc-server
+  name: rpc-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: rpc-test
+      service: rpc-server
   template:
     metadata:
       labels:
-        service: rpc-test
+        service: rpc-server
     spec:
       containers:
       - image: aerosouund/rpc-test:latest
-        name: rpc-test
+        name: rpc-server
         imagePullPolicy: Always
       restartPolicy: Always
