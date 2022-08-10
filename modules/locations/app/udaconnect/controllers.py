@@ -11,8 +11,6 @@ from flask_restx import Namespace, Resource
 from typing import Optional, List
 import app.udaconnect.locations_pb2 as locations_pb2
 import app.udaconnect.locations_pb2_grpc as locations_pb2_grpc
-import grpc
-from concurrent import futures
 
 DATE_FORMAT = "%Y-%m-%d"
 
