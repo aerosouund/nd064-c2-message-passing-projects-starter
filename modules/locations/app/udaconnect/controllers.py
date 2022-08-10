@@ -27,7 +27,8 @@ class LocationResource(Resource):
         location = request.get_json()
         channel = grpc.insecure_channel("rpc-server:5005")
         stub = locations_pb2_grpc.LocationServiceStub(channel)
-        return location
+        response = stub.Create(location)
+        return response
 
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:
