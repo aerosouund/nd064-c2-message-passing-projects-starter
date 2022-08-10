@@ -11,13 +11,13 @@ from flask_restx import Namespace, Resource
 from typing import Optional, List
 import app.udaconnect.locations_pb2 as locations_pb2
 import app.udaconnect.locations_pb2_grpc as locations_pb2_grpc
+import grpc
+
 
 DATE_FORMAT = "%Y-%m-%d"
 
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
 
-
-# TODO: This needs better exception handling
 
 
 @api.route("/locations")
@@ -27,8 +27,9 @@ class LocationResource(Resource):
     @accepts(schema=LocationSchema)
     @responds(schema=LocationSchema)
     def post(self) -> Location:
-        request.get_json()
-        location: Location = LocationService.create(request.get_json())
+        location = request.get_json()
+        channel = grpc.insecure_channel("rpc-server:5005")
+        stub = locations_pb2_grpc.LocationServiceStub(channel)
         return location
 
     @responds(schema=LocationSchema)
