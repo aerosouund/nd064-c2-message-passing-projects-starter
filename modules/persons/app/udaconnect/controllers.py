@@ -9,7 +9,6 @@ from flask import request, g
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
-import threading
 
 DATE_FORMAT = "%Y-%m-%d"
 
