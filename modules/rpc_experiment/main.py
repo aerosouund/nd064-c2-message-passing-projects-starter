@@ -5,10 +5,14 @@ from concurrent import futures
 import time
 import logging
 from db import load_location
+import sys
 
 
-channel = grpc.insecure_channel("udaconnect-locations:5005")
-stub = locations_pb2_grpc.LocationServiceStub(channel)
+logging.basicConfig(
+    stream=sys.stdout,
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.DEBUG,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 class LocationServicer(locations_pb2_grpc.LocationServiceServicer):
     def Create(self, request, context):
@@ -37,7 +41,6 @@ if __name__=="__main__":
     server = create_rpc_server()
     server.add_insecure_port("[::]:5005")
     server.start()
-    # Keep thread alive
     try:
         while True:
             time.sleep(86400)
