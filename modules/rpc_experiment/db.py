@@ -15,7 +15,7 @@ def connect():
 def get_location(location_id):
     conn = connect()
     cursor = conn.cursor()
-    cursor.execute('SELECT id FROM location WHERE id=%s', [location_id])
+    cursor.execute('SELECT * FROM location WHERE id=%s', [location_id])
     results = cursor.fetchall()
     cursor.close()
     conn.close()
