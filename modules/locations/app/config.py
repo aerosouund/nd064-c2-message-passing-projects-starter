@@ -11,7 +11,7 @@ DB_NAME = os.environ["DB_NAME"]
 class BaseConfig:
     CONFIG_NAME = "base"
     USE_MOCK_EQUIVALENCY = False
-    DEBUG = False
+    DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
@@ -42,7 +42,7 @@ class TestingConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     CONFIG_NAME = "prod"
     SECRET_KEY = os.getenv("PROD_SECRET_KEY", "I'm Ron Burgundy?")
-    DEBUG = False
+    DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = False
     SQLALCHEMY_DATABASE_URI = (
