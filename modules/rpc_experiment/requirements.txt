@@ -1,4 +1,0 @@
-grpcio==1.47.0
-grpcio_tools==1.47.0
-GeoAlchemy2==0.8.4
-psycopg2==2.9.3
