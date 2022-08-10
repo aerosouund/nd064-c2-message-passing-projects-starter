@@ -30,7 +30,7 @@ class LocationResource(Resource):
         message = locations_pb2.LocationMessage(
                 id=location['id'],
                 person_id=location['person_id'],
-                created_at=location['created_at'],
+                created_at=location['creation_time'],
                 longitude=location['longitude'],
                 latitude=location['latitude']
             )
