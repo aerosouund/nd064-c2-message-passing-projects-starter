@@ -22,12 +22,12 @@ def get_location(location_id):
     return results[0]
     
 
-def load_location(location: Dict):
+def load_location(location):
     conn = connect()
     cursor = conn.cursor()
     cursor.execute(
         'INSERT INTO location (id, person_id, coordinate, creation_time) VALUES (%s, %s, %s, %s)',
-        (location['id'], location['person_id'], str(ST_Point(location["latitude"], location["longitude"])), location['created_at'])
+        (location['id'], location['person_id'], ST_AsText(ST_Point(location["latitude"], location["longitude"])), location['created_at'])
         )
     conn.commit()
     cursor.close()
