@@ -26,7 +26,7 @@ def load_location(location):
     conn = connect()
     cursor = conn.cursor()
     cursor.execute(
-        'INSERT INTO location (id, person_id, coordinate, creation_time) VALUES (%s, %s, ST_GeomFromText(%s), %s)',
+        'INSERT INTO location (id, person_id, coordinate, creation_time) VALUES (%s, %s, %s, %s)',
         (location['id'], location['person_id'], wkt.dumps(ST_Point(location["latitude"], location["longitude"])), location['created_at'])
         )
     conn.commit()
