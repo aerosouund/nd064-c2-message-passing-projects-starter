@@ -1,6 +1,7 @@
 import psycopg2
 from geoalchemy2.functions import ST_AsText, ST_Point
 from shapely import wkt
+from shapely.geometry import Point
 import os
 
 def connect():
@@ -27,7 +28,7 @@ def load_location(location):
     cursor = conn.cursor()
     cursor.execute(
         'INSERT INTO location (id, person_id, coordinate, creation_time) VALUES (%s, %s, %s, %s)',
-        (location['id'], location['person_id'], wkt.dumps(ST_Point(location["latitude"], location["longitude"])), location['created_at'])
+        (location['id'], location['person_id'], wkt.dumps(Point(location["latitude"], location["longitude"])), location['created_at'])
         )
     conn.commit()
     cursor.close()
