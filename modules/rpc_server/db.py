@@ -1,5 +1,4 @@
 import psycopg2
-from geoalchemy2.functions import ST_AsText, ST_Point
 from shapely import wkt
 from shapely.geometry import Point
 import os
