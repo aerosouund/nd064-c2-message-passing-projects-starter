@@ -1,0 +1,23 @@
+1) Kafka
+Deployed apache kafka and zookeeper using this tutorial:
+
+https://docs.bitnami.com/tutorials/deploy-scalable-kafka-zookeeper-cluster-kubernetes/
+
+To view kafka consumer logs: kubectl logs -f <DB WRITER POD NAME>
+
+2) gRPC
+This is the format for a message used for locations.
+To view rpc server logs: kubectl logs -f <RPC SERVER POD NAME>
+
+
+syntax = "proto3";
+
+message LocationMessage {
+
+  string id = 1;
+  string person_id = 2;
+  string created_at = 3;
+  float longitude = 4;
+  float latitude = 5;
+}
+
