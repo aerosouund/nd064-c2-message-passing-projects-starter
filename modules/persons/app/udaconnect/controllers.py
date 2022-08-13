@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app.udaconnect.models import Person
+from app.udaconnect.models import Person, Connection
 from app.udaconnect.schemas import (
     PersonSchema,
     ConnectionSchema
