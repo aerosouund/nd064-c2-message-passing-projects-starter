@@ -20,9 +20,8 @@ class Connection extends Component {
 
   getConnections = (personId) => {
     if (personId) {
-      // TODO: endpoint should be abstracted into a config variable
       fetch(
-        `http://13.53.58.242:30001/api/persons/${personId}/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5`
+        `http://udaconnect-persons:5000/api/persons/${personId}/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5`
       )
         .then((response) => response.json())
         .then((connections) =>
