@@ -1,0 +1,18 @@
+-Architecture breakdown:
+
+Two main services, one for persons and one for locations. Writes for the Persons API are committed to a Kafka queue and later
+consumed by a worker that commits records to the database. Writes for the locations service are commited to a gRPC server that
+listens on new records and commits them to the database.
+
+-Justification:
+
+a) Persons: We can be flexible with the fields that we record on persons and may decide to record different fields later
+and so for schema flexibility we use REST messages. to scale writes we use a Kafka queue and a client to offload work from the database
+in case many writes are coming in.
+
+b) Locations: Locations are strict in their structure and may be created very frequently and so we need a fast and strict
+communication channel. The locations service is gRPC client which commits incoming requests as gRPC messages to a server that handles
+writing them to the database
+
+c) Frontend: Both services maintain a REST interface to ease integration and flexibility with frontend. the frontend communicates
+with the services using their Kubernetes internal hostnames for fault tolerance and the ability to deploy on different environments. 
