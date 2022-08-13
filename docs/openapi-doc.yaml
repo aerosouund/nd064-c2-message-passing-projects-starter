@@ -1,0 +1,134 @@
+#-----------Persons------------ 
+swagger: '2.0'
+basePath: /
+paths:
+  /api/persons:
+    post:
+      responses:
+        '200':
+          description: Success
+      operationId: post_person
+      tags:
+        - Persons-Service
+    get:
+      responses:
+        '200':
+          description: Success
+      operationId: get_all_persons
+      tags:
+        - Persons-Service
+  /api/persons/{person_id}:
+    parameters:
+      - in: path
+        description: a person's unique ID
+        name: person_id
+        required: true
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+      operationId: get_person_resource
+      tags:
+        - Persons-Service
+  /api/persons/{person_id}/connection:
+    parameters:
+      - in: query
+        description: Proximity to a given user in meters
+        name: distance
+        type: string
+      - in: query
+        description: Upper bound of date range
+        name: end_date
+        type: string
+      - in: query
+        description: Lower bound of date range
+        name: start_date
+        type: string
+      - name: person_id
+        in: path
+        required: true
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+      operationId: get_connections
+      tags:
+        - Persons-Service
+info:
+  title: Persons-Service
+  version: 0.1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+tags:
+  - name: Persons-Service
+    description: Connections via geolocation.
+responses:
+  ParseError:
+    description: When a mask can't be interpreted
+  MaskError:
+    description: Any error occurence on a mask
+
+#-----------Locations------------ 
+swagger: '2.0'
+basePath: /
+paths:
+  /api/locations:
+    parameters:
+      - in: query
+        description: a location's unique ID
+        name: location_id
+        type: string
+    post:
+      responses:
+        '200':
+          description: Success
+      operationId: post_location
+      tags:
+        - Locations-Service
+    get:
+      responses:
+        '200':
+          description: Success
+      operationId: get_location
+      tags:
+        - Locations-Service
+  /api/locations/{location_id}:
+    parameters:
+      - in: path
+        description: a location's unique ID
+        name: location_id
+        required: true
+        type: string
+    post:
+      responses:
+        '200':
+          description: Success
+      operationId: post_location_specific
+      tags:
+        - Locations-Service
+    get:
+      responses:
+        '200':
+          description: Success
+      operationId: get_location_specific
+      tags:
+        - Locations-Service
+info:
+  title: Locations-Service
+  version: 0.1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+tags:
+  - name: Locations-Service
+    description: Connections via geolocation.
+responses:
+  ParseError:
+    description: When a mask can't be interpreted
+  MaskError:
+    description: Any error occurence on a mask
