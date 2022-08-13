@@ -3,8 +3,9 @@ from datetime import datetime
 from app.udaconnect.models import Person
 from app.udaconnect.schemas import (
     PersonSchema,
+    ConnectionSchema
 )
-from app.udaconnect.services import PersonService
+from app.udaconnect.services import PersonService, ConnectionService
 from flask import request, g
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
