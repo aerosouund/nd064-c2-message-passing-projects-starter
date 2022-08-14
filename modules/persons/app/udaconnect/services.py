@@ -54,7 +54,6 @@ class ConnectionService:
         ).all()
 
         # Cache all users in memory for quick lookup
-        # kafka queue with rest messages
         person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
 
         # Prepare arguments for queries
